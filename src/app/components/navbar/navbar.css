@@ -1,0 +1,22 @@
+/* My own style */
+.navbar-items {
+    /* Remove the default bullet point on the list items (children). */
+    list-style-type: none; 
+    /* flex-direction property is the explicit form of justify-content (for X-axis/row) and align-items (for Y-axis/column) properties,
+    where the developer define the direction of flex items. */
+    display: flex;
+    flex-direction: row; 
+    /* Create space between the flex items (children). */
+    gap: 20px;
+}
+
+.navbar-link {
+    text-decoration: none;
+    color: black;
+}
+
+/*
+.navbar {
+    justify-self: center;
+}
+*/

@@ -1,0 +1,51 @@
+<!-- NOTE: Angular event property is implicitly prefixed with $ operator during declaration, 
+therefore excluding it when calling the listener function will throw compilation error. -->
+<form action="" (submit)="onFormSubmission($event)" ngClass="login-form">
+    <h5 ngClass="form-title">{{ formTitle | uppercase }}</h5>
+    <h2 ngClass="welcome-message">{{ welcomeBackMessage }}</h2>
+    <p ngClass="signin-message">{{ signinMessage }}</p>
+
+    <div ngClass="field-container">
+        <!-- Label and email input. -->
+        <div ngClass="email-label-container"><label for="email" ngClass="email-label">{{ emailLabel }}</label></div>
+        <div ngClass="email-input-container"><input type="text" [formField]="signalLoginForm.email" id="email" ngClass="email-input" [placeholder]="emailInputPlaceholder"></div>
+
+        <!-- Validation error message for email input. -->
+        <!-- invalid() method returns true if the specified input field failed to meet ALL its laid-out validation rules, or
+        returns false if the field passes ALL its validation rules, or if an ASYNCHRONOUS validation is still pending. -->
+        <!-- <input> tag is untouched and undirty (NO value) by default, as a result, either of touched() or dirty() method MUST be used
+        on the input field (property) to return false since it is invalid (true) upon the display of the input on a page. -->
+        <!-- These default behaviours of <input> tag can be used in Angular signal form to prevent validation error messages from displaying
+        on a form page before a user interacts with the input. -->
+        @if (signalLoginForm.email().touched() && signalLoginForm.email().invalid()) {
+            @for (error of signalLoginForm.email().errors(); track error) {
+                <p ngClass="input-validation-message">{{ error.message }}</p>
+            }
+        }
+    </div>
+
+    <div ngClass="field-container">
+        <!-- Label and password input. -->
+        <div ngClass="password-label-container"><label for="password" ngClass="password-label">{{ passwordLabel }}</label></div>
+        <div ngClass="password-input-container"><input type="password" [formField]="signalLoginForm.password" id="password" ngClass="password-input" [placeholder]="passwordInputPlaceholder"></div>
+
+        <!-- Validation error message for password input. -->
+        @if (signalLoginForm.password().touched() && signalLoginForm.password().invalid()) {
+            @for (error of signalLoginForm.password().errors(); track error) {
+                <p ngClass="input-validation-message">{{ error.message }}</p>
+            }
+        }
+    </div>
+
+    <!-- checkbox input and label -->
+    <div ngClass="checkbox-label-container">
+        <input type="checkbox" id="checkbox">
+        <label for="checkbox">{{ checkboxLabel }}</label>
+    </div>
+
+    <!-- Signin button -->
+    <!-- Disable sign-in button if any of the input fields is invalid. -->
+    <!-- NOTE: Signal form function is called when we want to access the state of ALL input fields.  -->
+    <button type="submit" ngClass="login-button" [disabled]="signalLoginForm().invalid()">{{ signinButtonText }}</button>
+    <p ngClass="signup-text">New to YRA? <a routerLink="/signup" ngClass="signup-link">{{ signupText }}</a></p>
+</form>
